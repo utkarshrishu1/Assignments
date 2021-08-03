@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Assignment-3</title>
+<style>
+#body{
+background-color:black;
+height:100%;
+width:100%;
+display:flex;
+}
+#hover_div{
+background-color:black;
+color:orange;
+border:2px solid orange;
+height:30px;
+width:125px;
+text-align:center;
+padding-top:10px;
+position:absolute;
+transform:translate(-50%,-50%);
+top:50%;
+left:50%;
+transition:0.45s top;
+}
+#hover_div:hover{
+color:white;
+border:2px solid yellow;
+box-shadow:0px 2px 7px yellow;
+top:49%;
+}
+</style>
+</head>
+<body>
+<div id="body">
+<div id="hover_div">Hover Me</div>
+</div>
+</body>
+</html>
