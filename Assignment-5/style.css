@@ -1,0 +1,86 @@
+body{
+    background-color: springgreen;
+    padding: 25px;
+}
+.background{
+    background-color: white;
+    margin-bottom: 50px;
+}
+#navbar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+#navbar h1{
+    margin-right: 25px;
+}
+#navbar h1:hover{
+    cursor: pointer;
+}
+#navbar div:hover{
+cursor: pointer;
+}
+#navbar div{
+    margin-right: 15px;
+}
+.nav_item{
+    color: grey;
+    padding: 5px;
+}
+.nav_item:hover{
+    background-color: rgba(0,0,0,0.2);
+    color:black
+}
+#intro{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+#intro button{
+    width: 100px;
+}
+#intro button:hover{
+    cursor: pointer;
+}
+#intro div{
+    display: flex;
+    flex-direction: column;
+    margin-left: 25px;
+}
+#intro img{
+    float: left;
+    height: 200px;
+    width: 200px;
+    margin-left: 20px;
+}
+#intro p{
+    color: grey;
+}
+#intro button{
+    color:springgreen;
+    border-radius: 5px;
+    border:1px solid springgreen;
+    padding: 2px;
+}
+#about{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+#about p{
+    color:grey;
+    margin-top: 0px;
+}
+.display{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.display h2{
+    margin-bottom: 10px;
+}
+.display div{
+    border:1px solid gray;
+    color:gray;
+}
