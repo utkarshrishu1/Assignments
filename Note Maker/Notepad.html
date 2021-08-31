@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <style>
+        *{
+            margin:0px;
+            padding:0px;
+        }
+        body{
+            background: linear-gradient(to right, #654ea3, #eaafc8);
+            height: 100vh;
+            width: 100vh;
+        }
+        #create_new_notes{
+            display: inline-block;
+            height: 30px;
+            width: 250px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top:45%;
+            left:50%;
+            box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+            background: rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,255,255,0.5);
+            border-left: 1px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(5px);
+            transition: height 0.5s,width 0.5s,font-size 0.5s;
+        }
+        #view_notes{
+            display: inline-block;
+            height: 30px;
+            width: 250px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top:55%;
+            left:50%;
+            box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+            background: rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,255,255,0.5);
+            border-left: 1px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(5px);
+            transition: height 0.5s,width 0.5s,font-size 0.5s;
+        }
+        #create_new_notes:hover,#view_notes:hover{
+            height: 50px;
+            width: 350px;
+            font-size:20px;
+        }
+        .para{
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top:50%;
+            left:50%;
+        }
+        #text_area{
+            resize: none;
+            height:50vh;
+            width:50vw;
+            display: none;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top:50%;
+            left:50%;
+            box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+            background: rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,255,255,0.5);
+            border-left: 1px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(5px);
+            font-size: 15px;
+            padding:5px;
+        }
+        #save{
+            height:30px;
+            width: 100px;
+            display: none;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top:85%;
+            left:40%;
+            box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+            background: rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,255,255,0.5);
+            border-left: 1px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(5px);
+            transition: height 0.5s,width 0.5s,font-size 0.5s;
+            border-radius: 10px;;
+        }
+        #delete{
+            height:30px;
+            width: 100px;
+            display: none;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top:85%;
+            left:60%;
+            box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+            background: rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,255,255,0.5);
+            border-left: 1px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(5px);
+            transition: height 0.5s,width 0.5s,font-size 0.5s;
+            border-radius: 10px;;
+        }
+        #save:hover,#delete:hover{
+            height: 50px;
+            width: 200px;
+            font-size: 30px;
+        }
+        #text_area:focus,#search_box:focus,#search_button:focus{
+            outline: none;
+        }
+        h1{
+            display: none;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top:15%;
+            left:50%;
+        }
+        #nav_bar{
+            height:7%;
+            width:100vw;
+            background-color: #322348;
+            position: absolute;
+            display: none;
+        }
+        #search_box{
+            height: 30px;
+            width: 200px;
+            border-radius: 20px;
+            padding: 5px;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top:50%;
+            left:88%;  
+            box-sizing: border-box;
+        }
+        #flex_container{
+            display: none;
+            width: 100vw;
+            box-sizing: border-box;
+            position: absolute;
+            transform: translate(-50%,0%);
+            top:7%;
+            left:50%;
+        }
+        #search_button{
+        display: none;
+        box-sizing: border-box;
+        position: absolute;
+        transform: translate(-50%,-50%);
+        top:50%;
+        left:96%;
+        border-radius: 50px;
+        overflow: hidden;
+        height: 30px;
+        width: 35px;
+        }
+        #text_area::-webkit-scrollbar,body::-webkit-scrollbar {
+                display: none;
+            }
+        .mouse_style:hover{
+            cursor: pointer;
+        }    
+    </style>
+</head>
+<body>
+    <div id="nav_bar">
+        <div class="mouse_style" onclick="back()" style="display:inline-block;position: absolute;transform: translate(-50%,-50%);top:50%;left:3%;">
+            <p style="font-size: 40px;color:white"><</p>
+        </div>
+        <p class="para" id="your_notes" style="color:white;font-size: 20px;">Your Notes</p>
+        <input type="type" placeholder="Search" id="search_box">
+        <button class="mouse_style" id="search_button" onclick="searched()"><img src="search_button.png" alt="search(image not working)" height="30px" width="35px" style="border-radius: 50px;"></button>   
+    </div>
+    <h1 id="your_note">Your Note</h1>
+    <h1 id="write_note">Write new Note</h1>
+<div class="mouse_style" id="create_new_notes" onclick="new_note()"><p class="para"><strong>+</strong> Create New Note</p></div>
+<div class="mouse_style" id="view_notes" onclick="view_notes()"><p class="para">View Notes</p></div>
+<textarea id="text_area"></textarea>
+<div class="mouse_style" id="save" onclick="go_save()"><p class="para">Save</p></div>
+<div id="delete" class="mouse_style " onclick="delete_note()"><p class="para">Delete</p></div>
+<div id="flex_container"></div>
+
+
+<script>
+    var create_new_notes=document.getElementById("create_new_notes");
+    var view_note=document.getElementById("view_notes");
+    var heading1=document.getElementById("write_note");
+    var heading2=document.getElementById("your_note");
+    var text_area=document.getElementById("text_area");
+    var save=document.getElementById("save");
+    var nav_bar=document.getElementById("nav_bar");
+    var flex_container=document.getElementById("flex_container");
+    var search_box=document.getElementById("search_box");
+    var your_notes=document.getElementById("your_notes");
+    var del=document.getElementById("delete");
+    var search_button=document.getElementById("search_button");
+    var select_note=false;
+    var searched_something=false;
+    var create_note=false;
+    var resave=false;
+    var array=[];
+    var which_id;
+    if(JSON.parse(localStorage.getItem("strings"))!=null)
+    {
+        array=JSON.parse(localStorage.getItem("strings"));
+    }
+    function back(){
+        if(select_note)
+        {
+            search_box.style.display="inline-block";
+            search_button.style.display="inline-block";
+            your_notes.style.display="inline-block";
+            text_area.value="";
+            text_area.style.display="none";
+            your_note.style.display="none";
+            save.style.display="none";
+            del.style.display="none";
+            flex_container.style.display="flex";
+            select_note=false;
+                searched_something=false;
+            resave=false;
+        }
+        else if(create_note)
+        {
+            text_area.style.display="none";
+            heading1.style.display="none";
+            save.style.display="none";
+            nav_bar.style.display="none";
+            search_box.style.display="inline-block";
+            search_button.style.display="inline-block";
+            your_notes.style.display="inline-block";
+            create_new_notes.style.display="inline-block";
+            view_note.style.display="inline-block";
+            create_note=false;
+        }
+        else if(searched_something)
+        {
+            searched_something=false;
+            search_box.value="";
+            flex_container.style.height="auto";
+            view_notes();
+        }
+        else
+        {
+        create_new_notes.style.display="inline-block";
+         view_note.style.display="inline-block";
+         nav_bar.style.display="none";
+         flex_container.style.display="none";
+        }
+    }
+    function new_note(){
+         create_new_notes.style.display="none";
+         view_note.style.display="none";
+         heading1.style.display="inline-block";
+         text_area.style.display="inline-block";
+         save.style.display="inline-block";
+         save.style.left="50%";
+         nav_bar.style.display="inline-block";
+         search_box.style.display="none";
+         search_button.style.display="none";
+         your_notes.style.display="none";
+         text_area.focus();
+         create_note=true;
+    }
+    function view_notes(){
+        create_new_notes.style.display="none";
+        search_box.value="";
+        view_note.style.display="none";
+        nav_bar.style.display="inline-block";
+        search_box.style.display="inline-block";
+        search_button.style.display="inline-block";
+        your_note.style.display="none";
+        your_notes.style.display="inline-block";
+        text_area.style.display="none";
+        del.style.display="none";
+        save.style.display="none";
+        nav_bar.style.position="fixed";
+        nav_bar.style.zIndex="2";
+        flex_container.style.display="flex";
+        flex_container.style.flexWrap="wrap";
+        while(flex_container.firstChild)
+        {
+            flex_container.removeChild(flex_container.firstChild);
+        }
+        let i=0;
+        Array.from(array).forEach(function(text){
+            let new_element=document.createElement("div");
+            let paragraph=document.createElement("p");
+            paragraph.innerText=text;
+            new_element.id="id"+i;
+            i++;
+            new_element.appendChild(paragraph);
+            new_element.className="mouse_style";
+            new_element.setAttribute("style","margin:2%;height:25vh;width:20vw;overflow:hidden;padding:5px; box-shadow: 20px 20px 50px rgba(0,0,0,0.5);background: rgba(255,255,255,0.1);border-top: 1px solid rgba(255,255,255,0.5);border-left: 1px solid rgba(255,255,255,0.5);backdrop-filter: blur(5px);border-radius:10px;");
+            new_element.setAttribute("onclick","note_clicked(this)");
+            flex_container.appendChild(new_element);
+        });
+    }
+    function go_save(){
+        if(text_area.value==""&&resave==false)
+        {
+
+        }
+        else
+        {
+            if(resave)
+            {
+                if(text_area.value=="")
+                {
+                let number=0;
+                let p=0;
+                for(let i=2;i<=which_id.length-1;i++)
+                {
+                     number=parseInt(which_id.charAt(i))*Math.pow(10,p++)+number;
+                }
+                let check=confirm("Are you sure you save this Edited Note");
+                if(check)
+                {
+                  array.splice(number,1);
+                  localStorage.clear();
+                  localStorage.setItem("strings",JSON.stringify(array));
+                  resave=false;
+                  select_note=false;
+                  searched_something=false;
+                  view_notes();
+                }
+                }
+                else
+                {
+                    let text=text_area.value;
+                    let number=0;
+                    let p=0;
+                for(let i=2;i<=which_id.length-1;i++)
+                {
+                     number=parseInt(which_id.charAt(i))*Math.pow(10,p++)+number;
+                }
+                let check=confirm("Are you sure you save this Edited Note");
+                if(check)
+                {
+                    array.splice(number,1,text);
+                  localStorage.clear();
+                  localStorage.setItem("strings",JSON.stringify(array));
+                  resave=false;
+                  select_note=false;
+                  text_area.value="";
+                  searched_something=false;
+                  view_notes();
+                }
+                }
+            }
+            else
+            {
+            let text=text_area.value;
+            localStorage.clear();
+            array.push(text);
+            localStorage.setItem("strings",JSON.stringify(array));
+            create_new_notes.style.display="inline-block";
+            view_note.style.display="inline-block";
+            heading1.style.display="none";
+            text_area.style.display="none";
+            save.style.display="none";
+            text_area.value="";
+            nav_bar.style.display="none";
+            search_box.style.display="inline-block";
+            search_button.style.display="inline-block";
+            your_notes.style.display="inline-block";
+            create_note=false;
+            }
+        }
+    }
+    function note_clicked(element){
+        select_note=true;
+        let text=element.children[0].innerText;
+        which_id=element.id;
+        text_area.value=text;
+        flex_container.style.display="none";
+        search_box.style.display="none";
+        search_button.style.display="none";
+        your_notes.style.display="none";
+        text_area.style.display="inline-block";
+        heading2.style.display="inline-block";
+        save.style.display="inline-block";
+        save.style.left="40%";
+        del.style.display="inline-block";
+        resave=true;
+    }
+    function delete_note(){
+        let number=0;
+        let p=0;
+        for(let i=2;i<=which_id.length-1;i++)
+        {
+            number=parseInt(which_id.charAt(i))*Math.pow(10,p++)+number;
+        }
+        let check=confirm("Are you sure you want to Delete this Note");
+        if(check)
+        {
+        array.splice(number,1);
+        localStorage.clear();
+        localStorage.setItem("strings",JSON.stringify(array));
+        resave=false;
+        select_note=false;
+        searched_something=false;
+        view_notes();
+        }
+        text_area.value="";
+    }
+    function searched(){
+        searched_something=true;
+        let text=search_box.value;
+        let arr=[];
+        let arr_id=[];
+        for(let i=0;i<array.length;i++)
+        {
+            if(array[i].includes(text))
+            {
+                arr.push(array[i]);
+                arr_id.push(i);
+            }
+        }
+        while(flex_container.firstChild)
+        {
+            flex_container.removeChild(flex_container.firstChild);
+        }
+        if(arr.length==0)
+        {
+            let new_element=document.createElement("h1");
+            new_element.innerText="No Data Found!!!";
+            new_element.setAttribute("style","position:absolute;transform:translate(-50%,-50%);top:50%;left:50%;display:inline-block;");
+            flex_container.style.height="80vh";
+            flex_container.appendChild(new_element);
+        }
+        else
+        {
+        for(let x=0;x<arr.length;x++)
+        {
+            let new_element=document.createElement("div");
+            let paragraph=document.createElement("p");
+            paragraph.innerText=arr[x];
+            new_element.id="id"+arr_id[x];
+            new_element.appendChild(paragraph);
+            new_element.className="mouse_style";
+            new_element.setAttribute("style","margin:2%;height:25vh;width:20vw;overflow:hidden;padding:5px; box-shadow: 20px 20px 50px rgba(0,0,0,0.5);background: rgba(255,255,255,0.1);border-top: 1px solid rgba(255,255,255,0.5);border-left: 1px solid rgba(255,255,255,0.5);backdrop-filter: blur(5px);border-radius:10px;");
+            new_element.setAttribute("onclick","note_clicked(this)");
+            flex_container.appendChild(new_element);
+        }
+    }
+    }
+</script>
+</body>
+</html>
