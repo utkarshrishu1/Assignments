@@ -1,0 +1,97 @@
+body{
+    margin:0;
+    padding:0;
+}
+#parent{
+    height:100vh;
+    background-image: url('./background1.jpg');
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#block{
+    background-color: rgba(255,255,255,0.2);
+    height: 50vh;
+    width: 25vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#search{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20vw;
+    height: fit-content;
+}
+input{
+    background-color: black;
+    height: 30px;
+    color: greenyellow;
+    border-radius: 10px;
+    border: 0px;
+    padding: 2px;
+    width: 15vw;
+    text-align: center;
+}
+input:focus,button:focus{
+    outline: none;
+}
+button{
+    background-color: grey;
+    color: black;
+    height: 30px;
+    width: 15vw;
+    text-align: center;
+    border: 0px;
+    border-radius: 10px;
+}
+button:hover{
+    cursor: pointer;
+}
+#forcast{
+    background-color: rgba(255,255,255, 0.4);
+    margin-top:30px;
+    width: 20vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+h3,h4,h2{
+    padding: 0;
+    margin:0;
+    margin-top: 15px;
+}
+@media (max-width:1000px) {
+    #block{
+        width: 60vw;
+    }
+    #forcast{
+        width: 50vw;
+    }
+    #search{
+        width: 50vw;
+    }
+    input,button{
+        width: 50vw;
+    }
+}
+@media (max-width:300px) {
+    #block{
+        width: 70vw;
+    }
+    #forcast{
+        width: 60vw;
+    }
+    #search{
+        width: 60vw;
+    }
+    input,button{
+        width: 60vw;
+    }
+}
